@@ -1,8 +1,8 @@
 module MetricFu
-  class MetricRcov < Metric
+  class MetricTestCoverage < Metric
 
     def name
-      :rcov
+      :test_coverage
     end
 
     def default_run_options

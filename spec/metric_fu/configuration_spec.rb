@@ -6,8 +6,8 @@ describe MetricFu::Configuration do
     ENV['CC_BUILD_ARTIFACTS'] = nil
     @config = MetricFu.configuration
     @config.reset
-    MetricFu.configuration.configure_metric(:rcov) do |rcov|
-      rcov.enabled = true
+    MetricFu.configuration.configure_metric(:test_coverage) do |test_coverage|
+      test_coverage.enabled = true
     end
     MetricFu.configure
     allow(MetricFu::Io::FileSystem).to receive(:create_directories) # no need to create directories for the tests
@@ -197,7 +197,7 @@ describe MetricFu::Configuration do
       end
 
 
-      it 'should set @rcov to ' +
+      it 'should set @test_coverage to ' +
                             %q(:test_files =>  Dir['{spec,test}/**/*_{spec,test}.rb'],
                             :rcov_opts => [
                               "--sort coverage",
@@ -209,8 +209,8 @@ describe MetricFu::Configuration do
                               '--include-file "\Aapp,\Alib"',
                               "-Ispec"
                             ]) do
-        load_metric 'rcov'
-        expect(MetricFu::Metric.get_metric(:rcov).run_options).to eq(
+        load_metric 'test_coverage'
+        expect(MetricFu::Metric.get_metric(:test_coverage).run_options).to eq(
                 { :environment => 'test',
                             :test_files =>  Dir['{spec,test}/**/*_{spec,test}.rb'],
                             :rcov_opts => [

@@ -10,7 +10,7 @@ describe MetricFu::Hotspot do
   it "returns an array of of the analyzers that subclass it" do
     expected_analyzers = [ReekHotspot, RoodiHotspot,
       FlogHotspot, ChurnHotspot, SaikuroHotspot,
-      FlayHotspot, StatsHotspot, RcovHotspot]
+      FlayHotspot, StatsHotspot, TestCoverageHotspot]
 
     expect(MetricFu::Hotspot.analyzers.size).to eq(expected_analyzers.size)
   end

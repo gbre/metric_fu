@@ -1,4 +1,4 @@
-class MetricFu::RcovHotspot < MetricFu::Hotspot
+class MetricFu::TestCoverageHotspot < MetricFu::Hotspot
 
   COLUMNS = %w{percentage_uncovered}
 
@@ -7,7 +7,7 @@ class MetricFu::RcovHotspot < MetricFu::Hotspot
   end
 
   def name
-    :rcov
+    :test_coverage
   end
 
   def map_strategy
@@ -29,7 +29,7 @@ class MetricFu::RcovHotspot < MetricFu::Hotspot
       info[:methods].each do |method_name, percentage_uncovered|
         location = MetricFu::Location.for(method_name)
         table << {
-          "metric" => :rcov,
+          "metric" => :test_coverage,
           'file_path' => file_name,
           'class_name' => location.class_name,
           "method_name" => location.method_name,

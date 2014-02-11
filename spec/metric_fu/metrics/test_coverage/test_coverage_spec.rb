@@ -1,48 +1,48 @@
 require "spec_helper"
-MetricFu.metrics_require { 'rcov/rcov' }
+MetricFu.metrics_require { 'test_coverage/test_coverage' }
 
-describe MetricFu::RcovGenerator do
+describe MetricFu::TestCoverageGenerator do
 
   before do
     setup_fs
     MetricFu::Configuration.run do |config|
-      config.configure_metric(:rcov) do |rcov|
-        rcov.enabled = true
+      config.configure_metric(:test_coverage) do |test_coverage|
+        test_coverage.enabled = true
       end
     end
   end
 
   before :each do
-    @default_options = MetricFu::Metric.get_metric(:rcov).run_options
+    @default_options = MetricFu::Metric.get_metric(:test_coverage).run_options
   end
 
   describe "emit" do
     before :each do
       options = {:external =>  nil}
-      @rcov = MetricFu::RcovGenerator.new(@default_options.merge(options))
+      @test_coverage = MetricFu::TestCoverageGenerator.new(@default_options.merge(options))
     end
 
     it "should clear out previous output and make output folder" do
-      expect(MetricFu::Utility).to receive(:rm_rf).with(MetricFu::RcovGenerator.metric_directory, :verbose => false)
-      expect(MetricFu::Utility).to receive(:mkdir_p).with(MetricFu::RcovGenerator.metric_directory)
-      @rcov.reset_output_location
+      expect(MetricFu::Utility).to receive(:rm_rf).with(MetricFu::TestCoverageGenerator.metric_directory, :verbose => false)
+      expect(MetricFu::Utility).to receive(:mkdir_p).with(MetricFu::TestCoverageGenerator.metric_directory)
+      @test_coverage.reset_output_location
     end
 
     it "should set the RAILS_ENV" do
-      expect(MetricFu::Utility).to receive(:rm_rf).with(MetricFu::RcovGenerator.metric_directory, :verbose => false)
-      expect(MetricFu::Utility).to receive(:mkdir_p).with(MetricFu::RcovGenerator.metric_directory)
+      expect(MetricFu::Utility).to receive(:rm_rf).with(MetricFu::TestCoverageGenerator.metric_directory, :verbose => false)
+      expect(MetricFu::Utility).to receive(:mkdir_p).with(MetricFu::TestCoverageGenerator.metric_directory)
       options = {:environment => 'metrics', :external => nil}
-      @rcov = MetricFu::RcovGenerator.new(@default_options.merge(options))
-      expect(@rcov.command).to include('RAILS_ENV=metrics')
+      @test_coverage = MetricFu::TestCoverageGenerator.new(@default_options.merge(options))
+      expect(@test_coverage.command).to include('RAILS_ENV=metrics')
     end
   end
 
   describe "with RCOV_OUTPUT fed into" do
     before :each do
       options = {:external =>  nil}
-      @rcov = MetricFu::RcovGenerator.new(@default_options.merge(options))
-      expect(@rcov).to receive(:load_output).and_return(RCOV_OUTPUT)
-      @files = @rcov.analyze
+      @test_coverage = MetricFu::TestCoverageGenerator.new(@default_options.merge(options))
+      expect(@test_coverage).to receive(:load_output).and_return(RCOV_OUTPUT)
+      @files = @test_coverage.analyze
     end
 
     describe "analyze" do
@@ -64,24 +64,24 @@ describe MetricFu::RcovGenerator do
 
     describe "to_h" do
       it "should calculate total percentage for all files" do
-        expect(@rcov.to_h[:rcov][:global_percent_run]).to eq(13.7)
+        expect(@test_coverage.to_h[:test_coverage][:global_percent_run]).to eq(13.7)
       end
     end
   end
   describe "with external configuration option set" do
     before :each do
-      options = {:external =>  'coverage/rcov.txt'}
-      @rcov = MetricFu::RcovGenerator.new(@default_options.merge(options))
+      options = {:external =>  'coverage/test_coverage.txt'}
+      @test_coverage = MetricFu::TestCoverageGenerator.new(@default_options.merge(options))
     end
 
     it "should emit nothing if external configuration option is set" do
       expect(MetricFu::Utility).not_to receive(:rm_rf)
-      @rcov.emit
+      @test_coverage.emit
     end
 
-    it "should open the external rcov analysis file" do
-      expect(@rcov).to receive(:load_output).and_return(RCOV_OUTPUT)
-      @files = @rcov.analyze
+    it "should open the external test_coverage analysis file" do
+      expect(@test_coverage).to receive(:load_output).and_return(RCOV_OUTPUT)
+      @files = @test_coverage.analyze
     end
 
   end
@@ -94,7 +94,7 @@ Profiling enabled.
 
 Top 10 slowest examples:
 0.2707830 MetricFu::RoodiGrapher responding to #get_metrics should push 13 to roodi_count
-0.1994550 MetricFu::RcovGrapher responding to #get_metrics should update labels with the date
+0.1994550 MetricFu::TestCoverageGrapher responding to #get_metrics should update labels with the date
 0.1985800 MetricFu::ReekGrapher responding to #get_metrics should set a hash of code smells to reek_count
 0.1919860 MetricFu::ReekGrapher responding to #get_metrics should update labels with the date
 0.1907400 MetricFu::RoodiGrapher responding to #get_metrics should update labels with the date

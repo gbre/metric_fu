@@ -8,10 +8,10 @@
 #
 #   # To configure individual metrics...
 #
-#   config.configure_metric(:rcov) do |rcov|
-#     rcov.coverage_file = MetricFu.run_path.join("coverage/rcov/rcov.txt")
-#     rcov.enable
-#     rcov.activate
+#   config.configure_metric(:test_coverage) do |test_coverage|
+#     test_coverage.coverage_file = MetricFu.run_path.join("coverage/rcov/rcov.txt")
+#     test_coverage.enable
+#     test_coverage.activate
 #   end
 #
 #   config.configure_metric(:cane) do |cane|
@@ -21,7 +21,7 @@
 #     cane.no_doc = 'y'
 #     cane.no_readme = 'y'
 #   end
-# 
+#
 #   config.configure_metric(:churn) do |churn|
 #     churn.enabled = true
 #     churn.ignore_files = 'HISTORY.md, TODO.md'

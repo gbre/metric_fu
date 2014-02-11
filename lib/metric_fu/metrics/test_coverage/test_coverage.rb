@@ -4,11 +4,11 @@ MetricFu.data_structures_require { 'line_numbers' }
 
 module MetricFu
 
-  class RcovGenerator < MetricFu::Generator
+  class TestCoverageGenerator < MetricFu::Generator
     NEW_FILE_MARKER = /^={80}$/.freeze
 
     def self.metric
-      :rcov
+      :test_coverage
     end
 
     class Line
@@ -64,19 +64,19 @@ module MetricFu
       @global_total_lines = 0
       @global_total_lines_run = 0
 
-      @rcov = add_coverage_percentage(files)
+      @test_coverage = add_coverage_percentage(files)
     end
 
     def to_h
       global_percent_run = ((@global_total_lines_run.to_f / @global_total_lines.to_f) * 100)
       add_method_data
-      {:rcov => @rcov.merge({:global_percent_run => round_to_tenths(global_percent_run) })}
+      {:test_coverage => @test_coverage.merge({:global_percent_run => round_to_tenths(global_percent_run) })}
     end
 
     private
 
     def add_method_data
-      @rcov.each_pair do |file_path, info|
+      @test_coverage.each_pair do |file_path, info|
         file_contents = ""
         coverage = []
 
@@ -89,7 +89,7 @@ module MetricFu
           line_numbers = MetricFu::LineNumbers.new(file_contents)
         rescue StandardError => e
           raise e unless e.message =~ /you shouldn't be able to get here/
-          mf_log "ruby_parser blew up while trying to parse #{file_path}. You won't have method level Rcov information for this file."
+          mf_log "ruby_parser blew up while trying to parse #{file_path}. You won't have method level TestCoverage information for this file."
           next
         end
 
@@ -106,10 +106,10 @@ module MetricFu
           end
         end
 
-        @rcov[file_path][:methods] = {}
+        @test_coverage[file_path][:methods] = {}
 
         method_coverage_map.each do |method_name, coverage_data|
-          @rcov[file_path][:methods][method_name] = (coverage_data[:uncovered] / coverage_data[:total].to_f) * 100.0
+          @test_coverage[file_path][:methods][method_name] = (coverage_data[:uncovered] / coverage_data[:total].to_f) * 100.0
         end
 
       end

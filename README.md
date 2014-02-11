@@ -121,10 +121,10 @@ in your .metrics file add the below to run pre-generated metrics
 
 ```ruby
 MetricFu::Configuration.run do |config|
-  config.configure_metric(:rcov) do |rcov|
-    rcov.coverage_file = MetricFu.run_path.join("coverage/rcov/rcov.txt")
-    rcov.enable
-    rcov.activate
+  config.configure_metric(:test_coverage) do |test_coverage|
+    test_coverage.coverage_file = MetricFu.run_path.join("coverage/rcov/rcov.txt")
+    test_coverage.enable
+    test_coverage.activate
   end
 end
 ```

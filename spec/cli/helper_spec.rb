@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'metric_fu/cli/helper'
-MetricFu.configuration.configure_metric(:rcov) do |rcov|
-  rcov.enabled = true
+MetricFu.configuration.configure_metric(:test_coverage) do |test_coverage|
+  test_coverage.enabled = true
 end
 MetricFu.configure
 
@@ -48,8 +48,8 @@ describe MetricFu::Cli::Helper do
         end
       end
 
-      it "enables RCov" do
-        expect(defaults[:rcov]).to be_truthy
+      it "enables TestCoverage" do
+        expect(defaults[:test_coverage]).to be_truthy
       end
 
       it "runs by default" do
@@ -131,12 +131,12 @@ describe MetricFu::Cli::Helper do
       expect(helper.process_options(["--hotspots"])[:hotspots]).to be_truthy
     end
 
-    it "turns rcov off" do
-      expect(helper.process_options(["--no-rcov"])[:rcov]).to be_falsey
+    it "turns test_coverage off" do
+      expect(helper.process_options(["--no-test-coverage"])[:test_coverage]).to be_falsey
     end
 
-    it "turns rcov on" do
-      expect(helper.process_options(["--rcov"])[:rcov]).to be_truthy
+    it "turns test_coverage on" do
+      expect(helper.process_options(["--test-coverage"])[:test_coverage]).to be_truthy
     end
 
     it "turns reek off" do
