@@ -3,7 +3,7 @@
     <style>
     <%=  inline_css('css/syntax.css') %>
     <%=  inline_css('css/bluff.css') if MetricFu.configuration.graph_engine == :bluff %>
-    <%=  inline_css('css/rcov.css') if @metrics.has_key?(:rcov) %>
+    <%=  inline_css('css/test_coverage.css') if @metrics.has_key?(:test_coverage) %>
     </style>
   </head>
   <body>
