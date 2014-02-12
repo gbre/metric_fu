@@ -7,7 +7,7 @@ class MetricFu::TestCoverageHotspot < MetricFu::Hotspot
   end
 
   def name
-    :test_coverage
+    :testcoverage
   end
 
   def map_strategy
