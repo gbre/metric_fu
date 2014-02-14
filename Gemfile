@@ -4,8 +4,6 @@ source 'https://rubygems.org'
 group :test, :local_development  do
   gem 'pry'
   gem 'pry-nav'
-  # https://github.com/kina/simplecov-rcov-text
-  gem 'simplecov-rcov-text', group: :metrics
 end
 
 gemspec :path => File.expand_path('..', __FILE__)
